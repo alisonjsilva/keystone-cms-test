@@ -21,14 +21,15 @@ model User {
 }
 
 model Post {
-  id          String    @id @default(cuid())
-  title       String    @default("")
-  status      String?   @default("draft")
-  content     String    @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
+  id          String     @id @default(cuid())
+  title       String     @default("")
+  status      String?    @default("draft")
+  content     String     @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
   publishDate DateTime?
-  author      User?     @relation("Post_author", fields: [authorId], references: [id])
-  authorId    String?   @map("author")
-  tags        Tag[]     @relation("Post_tags")
+  author      User?      @relation("Post_author", fields: [authorId], references: [id])
+  authorId    String?    @map("author")
+  tags        Tag[]      @relation("Post_tags")
+  category    Category[] @relation("Category_posts")
 
   @@index([authorId])
 }
@@ -37,4 +38,10 @@ model Tag {
   id    String @id @default(cuid())
   name  String @default("")
   posts Post[] @relation("Post_tags")
+}
+
+model Category {
+  id    String @id @default(cuid())
+  title String @default("")
+  posts Post[] @relation("Category_posts")
 }

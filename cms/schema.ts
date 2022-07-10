@@ -127,6 +127,19 @@ export const lists: Lists = {
         },
         many: true,
       }),
+
+      category: relationship({
+        ref: 'Category.posts',
+        ui: {
+          displayMode: 'cards',
+          cardFields: ['title'],
+          inlineEdit: { fields: ['title'] },
+          linkToItem: true,
+          inlineConnect: true,
+          inlineCreate: { fields: ['title'] },
+        },
+        many: true
+      })
     },
   }),
   // Our final list is the tag list. This field is just a name and a relationship to posts
@@ -139,4 +152,11 @@ export const lists: Lists = {
       posts: relationship({ ref: 'Post.tags', many: true }),
     },
   }),
+
+  Category: list({
+    fields: {
+      title: text(),
+      posts: relationship({ ref: 'Post.category', many: true }),
+    }
+  })
 };
